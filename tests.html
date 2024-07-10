@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Jeedom</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .center-text {
+            position: absolute;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .center-text h1 {
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .center-text .framework {
+            color: #99d202;
+        }
+
+        .center-text .jeedom {
+            color: #4b4a50;
+        }
+
+        .bubble-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bubble {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: popIn 1s ease-out;
+            animation-fill-mode: forwards;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .bubble span {
+            display: block;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        .bubble i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                height: auto;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .bubble-container {
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                position: relative;
+            }
+            .bubble {
+                position: static;
+                margin: 10px 0;
+                width: 120px;
+                height: 120px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="center-text">
+            <h1 class="framework">Framework</h1>
+            <h1 class="jeedom">Jeedom</h1>
+        </div>
+        <div class="bubble-container" id="bubble-container">
+            <div class="bubble">
+                <i class="icon">&#128187;</i>
+                <span>Logiciel Open-source</span>
+            </div>
+            <div class="bubble">
+                <i class="icon">&#128101;</i>
+                <span>Plus de 35.000 utilisateurs actifs</span>
+            </div>
+            <div class="bubble">
+                <i class="icon">&#128241;</i>
+                <span>Multi-protocoles</span>
+            </div>
+            <div class="bubble">
+                <i class="icon">&#128295;</i>
+                <span>Accompagnement sur mesure pour développeurs</span>
+            </div>
+            <div class="bubble">
+                <i class="icon">&#127968;</i>
+                <span>Autonome</span>
+            </div>
+            <div class="bubble">
+                <i class="icon">&#9881;</i>
+                <span>Étude de faisabilité et déploiement de vos projets IOT</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const bubbles = document.querySelectorAll(".bubble");
+            const container = document.querySelector(".bubble-container");
+            const containerRect = container.getBoundingClientRect();
+            const centerX = containerRect.width / 2;
+            const centerY = containerRect.height / 2;
+            const radius = Math.min(containerRect.width, containerRect.height) / 2 - 75; // Ajuste o raio para manter as bolhas dentro do contêiner
+
+            bubbles.forEach((bubble, index) => {
+                const angle = (index / bubbles.length) * (2 * Math.PI);
+                const x = centerX + radius * Math.cos(angle) - bubble.offsetWidth / 2;
+                const y = centerY + radius * Math.sin(angle) - bubble.offsetHeight / 2;
+
+                bubble.style.left = `${x}px`;
+                bubble.style.top = `${y}px`;
+                bubble.style.opacity = 1;
+                bubble.style.animationDelay = `${0.5 + index * 0.5}s`;
+            });
+        });
+    </script>
+</body>
+</html>
